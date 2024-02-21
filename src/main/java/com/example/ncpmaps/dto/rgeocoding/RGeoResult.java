@@ -9,4 +9,5 @@ public class RGeoResult {
     private String name;
     private Map<String, String> code;
     private RGeoRegion region;
+    private RGeoLand land;
 }

@@ -1,5 +1,6 @@
 package com.example.ncpmaps.dto.direction;
 
+import com.example.ncpmaps.dto.PointDto;
 import lombok.Data;
 
 import java.util.List;
