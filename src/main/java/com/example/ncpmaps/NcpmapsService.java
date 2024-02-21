@@ -3,9 +3,11 @@ package com.example.ncpmaps;
 import com.example.ncpmaps.client.NcpHttpInterface;
 import com.example.ncpmaps.dto.NaviRouteDto;
 import com.example.ncpmaps.dto.NaviWithPointsDto;
+import com.example.ncpmaps.dto.NaviWithQueryDto;
 import com.example.ncpmaps.dto.PointDto;
 import com.example.ncpmaps.dto.direction.DirectionNcpResponse;
 import com.example.ncpmaps.dto.direction.DirectionRoute;
+import com.example.ncpmaps.dto.geocoding.GeoNcpResponse;
 import com.example.ncpmaps.dto.rgeocoding.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,6 +61,31 @@ public class NcpmapsService {
 
         RGeoResponseDto result = new RGeoResponseDto(sb.toString());
         return result;
+    }
 
+    public NaviRouteDto withQuery(NaviWithQueryDto dto) {
+        // dto에서 PointDto start (좌표)를 가져왔고,
+        // String query에서 좌표를 가져와 >> 메서드로 뽑는다.
+        // 이 둘의 이동경로를 구하면 된다.
+
+        PointDto start = dto.getStart();
+        PointDto goal = this.geoCoding(dto.getQuery());
+        NaviWithPointsDto request = new NaviWithPointsDto(start, goal);
+        NaviRouteDto result = this.directions5(request);
+        return result;
+    }
+
+    public PointDto geoCoding(String query) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("query", query);
+
+        GeoNcpResponse response = exchange.geoCoding(params);
+        log.info("geoCoding:: " + response);
+
+        String x = response.getAddresses().get(0).getX();
+        String y = response.getAddresses().get(0).getY();
+
+        PointDto secondPoint = new PointDto(Double.parseDouble(x), Double.parseDouble(y));
+        return secondPoint;
     }
 }

@@ -44,7 +44,7 @@ public class NaviController {
             @RequestBody
             NaviWithQueryDto dto
     ) {
-        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED);
+        return service.withQuery(dto);
     }
 
     // 두 IP 주소를 입력받아 이동경로를 반환하는 메서드
