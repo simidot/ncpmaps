@@ -2,6 +2,7 @@ package com.example.ncpmaps.client;
 
 import com.example.ncpmaps.dto.direction.DirectionNcpResponse;
 import com.example.ncpmaps.dto.geocoding.GeoNcpResponse;
+import com.example.ncpmaps.dto.geolocation.GeoLocationNcpResponse;
 import com.example.ncpmaps.dto.rgeocoding.RGeoNcpResponse;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
@@ -23,5 +24,6 @@ public interface NcpHttpInterface {
     GeoNcpResponse geoCoding(
             @RequestParam Map<String, Object> params
     );
+
 
 }
